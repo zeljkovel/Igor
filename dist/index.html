@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="application" ng-strict-di>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="initial-scale=1" />
+    <meta name="version-json" content="version.json" />
+    <!--icons-->
+    <!-- Built css files -->
+    <link rel="stylesheet" href="vendor.css" />
+    <link rel="stylesheet" href="core.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <title></title>
+</head>
+<body>
+
+<!-- app -->
+<ui-view></ui-view>
+
+<script src="vendor.js"></script>
+<script src="core.js"></script>
+<script src="app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://rawgit.com/hwthorn/parallaxify/master/jquery.parallaxify.js"></script>
+<script>
+    jQuery(function($) {
+        $.parallaxify({
+
+        })
+    })
+</script>
+<script type="text/javascript">
+    jQuery(function($) {
+        function animateDown(targetElement, speed) {
+            $(targetElement).animate({ marginTop: "+=250px"},
+                {
+                    duration: speed,
+                    complete: function ()
+                    {
+                        animateUp(targetElement, speed)
+                    }
+                })
+        }
+        function animateUp(targetElement, speed) {
+            $(targetElement).animate({marginTop: "-=250px"},
+                {
+                    duration: speed,
+                    complete: function () {
+                        animateDown(targetElement, speed)
+                    }
+                })
+        }
+        function animateRight(targetElement, speed) {
+            $(targetElement).animate({ marginLeft: "+=150px"},
+                {
+                    duration: speed,
+                    complete: function ()
+                    {
+                        animateLeft(targetElement, speed)
+                    }
+                })
+        }
+
+        function animateLeft(targetElement, speed) {
+            $(targetElement).animate({marginLeft: "-=150px"},
+                {
+                    duration: speed,
+                    complete: function () {
+                        animateRight(targetElement, speed)
+                    }
+                })
+        }
+
+            function animateDownSmall(targetElement, speed) {
+                $(targetElement).animate({ marginTop: "+=125px"},
+                    {
+                        duration: speed,
+                        complete: function () {
+                            animateUpSmall(targetElement, speed)
+                        }
+                    })
+            }
+
+            function animateUpSmall(targetElement, speed) {
+                $(targetElement).animate({ marginTop: "-=125px"},
+                    {
+                        duration: speed,
+                        complete: function ()
+                        {
+                            animateDownSmall(targetElement, speed)
+                        }
+                    })
+        }
+
+        animateDown('#11layer1', 10000);
+        animateDown('#64layer1', 10000);
+        animateDownSmall('#38layer1', 10000);
+        animateDown('#01layer1', 10000);
+        animateLeft('#10layer1', 10000);
+
+        animateDown('#60layer7', 10000);
+        animateLeft('#68layer7', 10000);
+        for(var layer = 1; layer < 7; layer++)
+        {
+            if(layer == 2 || layer == 4 )
+            {
+                for(var x = 0; x < 20; x++)
+                {
+                    for(var y = 0; y < 10; y++)
+                    {
+                        var element = '#'+x+y+'layer'+layer
+                            if(y%2==0)
+                                layer==2?animateLeft(element, 10000):animateRight(element, 10000)
+                            else if(y != 9)
+                                layer==2?animateRight(element, 10000):animateLeft(element, 10000)
+                            else
+                                animateUpSmall(element, 10000)
+                    }
+                }
+            }
+            else{
+                for(var x = 0; x < 10; x++)
+                {
+                    for(var y = 0; y < 10; y++)
+                    {
+                        element = '#'+x+y+'layer'+layer
+                        if(layer == 5 || layer == 6)
+                        {
+                            if(y%2==6-layer)
+                                animateLeft(element, 10000)
+                            else if(y != 9)
+                                animateRight(element, 10000)
+                            else
+                                animateUpSmall(element, 10000)
+                        }
+                        else if(x%2==1)
+                        {
+                            if(y%2==1)
+                                animateLeft(element, 10000)
+                            else if(y != 9)
+                                animateRight(element, 10000)
+                            else
+                                animateUpSmall(element, 10000)
+                        }
+                    }
+                }
+            }
+        }
+    })
+</script>
+<script src="//oblador.github.io/angular-scroll/0.6.2/angular-scroll.min.js"></script>
+<script src="//oblador.github.io/angular-parallax/angular-parallax.min.js"></script>
+</body>
+</html>
